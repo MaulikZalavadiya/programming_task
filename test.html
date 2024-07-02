@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Speech</title>
+</head>
+
+<body>
+    <h1>Text to Speech</h1>
+    <textarea id="text" rows="4" cols="50">Enter text here...</textarea>
+    <button onclick="speak()">Speak</button>
+
+    <script>
+        function speak() {
+            const text = document.getElementById('text').value;
+            const speech = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(speech);
+        }
+    </script>
+
+    <h1>Speech to Text</h1>
+    <button onclick="startRecognition()">Start Recognition</button>
+    <p id="result"></p>
+
+    <script>
+        function startRecognition() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'hi-IN';
+
+            recognition.onresult = function (event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('result').textContent = transcript;
+            };
+
+            recognition.start();
+        }
+    </script>
+</body>
+
+</html>
